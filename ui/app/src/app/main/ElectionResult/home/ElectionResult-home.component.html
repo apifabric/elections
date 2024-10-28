@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="ElectionResult" mode="tab" title="ELECTIONRESULT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ElectionResultTable" 
+            service="ElectionResult" 
+            entity="ElectionResult" 
+            title="ELECTIONRESULT"
+            keys="id"
+            columns="id;candidate_id;election_id;votes_received" 
+            header-actions="R;D"
+            visible-columns="id;candidate_id;election_id;votes_received"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="candidate_id" title="candidate_id">
+    <o-table-cell-renderer-service attr="candidate_id" 
+        service="Candidate" entity="CandidateType" columns="id;name"
+        parent-keys="id:candidate_id"
+        value-column="name" keys="candidate_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="election_id" title="election_id">
+    <o-table-cell-renderer-service attr="election_id" 
+        service="Election" entity="ElectionType" columns="id;id"
+        parent-keys="id:election_id"
+        value-column="id" keys="election_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #votes_received attr="votes_received" title="votes_received" type="integer" editable="no" required="yes" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

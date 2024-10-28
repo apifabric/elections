@@ -1,0 +1,44 @@
+<o-form-layout-manager attr="Candidate" mode="tab" title="CANDIDATE">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="CandidateTable" 
+            service="Candidate" 
+            entity="Candidate" 
+            title="CANDIDATE"
+            keys="id"
+            columns="name;party_id;speech;id" 
+            header-actions="R;D"
+            visible-columns="name;party_id;speech;id"  
+            sort-columns="name" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #name attr="name" title=" name*" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column attr="party_id" title="party_id">
+    <o-table-cell-renderer-service attr="party_id" 
+        service="Party" entity="PartyType" columns="id;name"
+        parent-keys="id:party_id"
+        value-column="name" keys="party_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #speech attr="speech" title="speech" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

@@ -1,0 +1,361 @@
+about:
+  date: October 28, 2024 19:06:41
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 13
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  CampaignEvent:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: candidate_id
+      required: true
+    - name: location
+      required: true
+    - name: date_held
+      required: true
+      type: DATETIME
+    description: Represents campaign events organized by candidates.
+    info_list: Represents campaign events organized by candidates.
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    type: CampaignEvent
+    user_key: id
+  Candidate:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: party_id
+    - name: speech
+    - name: id
+    description: Represents candidates in the looney tunes presidential election.
+    info_list: Represents candidates in the looney tunes presidential election.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: CampaignEventList
+      resource: CampaignEvent
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: DebateParticipantList
+      resource: DebateParticipant
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: ElectionResultList
+      resource: ElectionResult
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: MediaAppearanceList
+      resource: MediaAppearance
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: SponsorshipList
+      resource: Sponsorship
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: VoteList
+      resource: Vote
+    - direction: toone
+      fks:
+      - party_id
+      name: party
+      resource: Party
+    type: Candidate
+    user_key: name
+  Debate:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: scheduled_date
+      required: true
+      type: DATETIME
+    - name: location
+      required: true
+    description: Represents debates between candidates.
+    info_list: Represents debates between candidates.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - debate_id
+      name: DebateParticipantList
+      resource: DebateParticipant
+    type: Debate
+    user_key: id
+  DebateParticipant:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: candidate_id
+      required: true
+    - name: debate_id
+      required: true
+    description: Represents candidates participating in a debate.
+    info_list: Represents candidates participating in a debate.
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    - direction: toone
+      fks:
+      - debate_id
+      name: debate
+      resource: Debate
+    type: DebateParticipant
+    user_key: id
+  District:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: region
+    - name: id
+    description: Represents electoral districts.
+    info_list: Represents electoral districts.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - district_id
+      name: VoterList
+      resource: Voter
+    type: District
+    user_key: name
+  Election:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: location
+      required: true
+    - name: date_held
+      required: true
+      type: DATETIME
+    description: Represents elections held at specific times.
+    info_list: Represents elections held at specific times.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - election_id
+      name: ElectionResultList
+      resource: ElectionResult
+    - direction: tomany
+      fks:
+      - election_id
+      name: VoteList
+      resource: Vote
+    type: Election
+    user_key: id
+  ElectionResult:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: candidate_id
+      required: true
+    - name: election_id
+      required: true
+    - name: votes_received
+      required: true
+    description: Represents the result of an election for a candidate.
+    info_list: Represents the result of an election for a candidate.
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    - direction: toone
+      fks:
+      - election_id
+      name: election
+      resource: Election
+    type: ElectionResult
+    user_key: id
+  MediaAppearance:
+    attributes:
+    - label: ' media_name*'
+      name: media_name
+      required: true
+      search: true
+      sort: true
+    - name: candidate_id
+      required: true
+    - name: appearance_date
+      required: true
+      type: DATETIME
+    - name: id
+    description: Represents media appearances made by candidates.
+    info_list: Represents media appearances made by candidates.
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    type: MediaAppearance
+    user_key: media_name
+  Party:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: slogan
+    - name: id
+    description: Represents political parties in the election.
+    info_list: Represents political parties in the election.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - party_id
+      name: CandidateList
+      resource: Candidate
+    - direction: tomany
+      fks:
+      - party_id
+      name: SponsorshipList
+      resource: Sponsorship
+    type: Party
+    user_key: name
+  Sponsorship:
+    attributes:
+    - label: ' sponsor_name*'
+      name: sponsor_name
+      required: true
+      search: true
+      sort: true
+    - name: candidate_id
+    - name: party_id
+    - name: id
+    description: Represents sponsorship offers to candidates or parties.
+    info_list: Represents sponsorship offers to candidates or parties.
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    - direction: toone
+      fks:
+      - party_id
+      name: party
+      resource: Party
+    type: Sponsorship
+    user_key: sponsor_name
+  Vote:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: candidate_id
+      required: true
+    - name: election_id
+      required: true
+    - name: voter_id
+      required: true
+    description: Represents individual votes cast in an election.
+    info_list: Represents individual votes cast in an election.
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    - direction: toone
+      fks:
+      - election_id
+      name: election
+      resource: Election
+    - direction: toone
+      fks:
+      - voter_id
+      name: voter
+      resource: Voter
+    type: Vote
+    user_key: id
+  Voter:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: district_id
+    - name: id
+    description: Represents registered voters.
+    info_list: Represents registered voters.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - voter_id
+      name: VoteList
+      resource: Vote
+    - direction: toone
+      fks:
+      - district_id
+      name: district
+      resource: District
+    type: Voter
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

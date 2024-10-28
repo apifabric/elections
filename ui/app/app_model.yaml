@@ -1,0 +1,527 @@
+about:
+  date: October 28, 2024 19:06:41
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  CampaignEvent:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: candidate_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: location
+      required: true
+      template: text
+      type: VARCHAR
+    - name: date_held
+      required: true
+      type: DATETIME
+    description: Represents campaign events organized by candidates.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents campaign events organized by candidates.
+    label: CampaignEvent
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    type: CampaignEvent
+  Candidate:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: party_id
+      template: integer
+      type: INTEGER
+    - name: speech
+      template: text
+      type: TEXT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents candidates in the looney tunes presidential election.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents candidates in the looney tunes presidential election.
+    label: Candidate
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: CampaignEventList
+      resource: CampaignEvent
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: DebateParticipantList
+      resource: DebateParticipant
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: ElectionResultList
+      resource: ElectionResult
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: MediaAppearanceList
+      resource: MediaAppearance
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: SponsorshipList
+      resource: Sponsorship
+    - direction: tomany
+      fks:
+      - candidate_id
+      name: VoteList
+      resource: Vote
+    - direction: toone
+      fks:
+      - party_id
+      name: party
+      resource: Party
+    type: Candidate
+  Debate:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: scheduled_date
+      required: true
+      type: DATETIME
+    - name: location
+      required: true
+      template: text
+      type: VARCHAR
+    description: Represents debates between candidates.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents debates between candidates.
+    label: Debate
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - debate_id
+      name: DebateParticipantList
+      resource: DebateParticipant
+    type: Debate
+  DebateParticipant:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: candidate_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: debate_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Represents candidates participating in a debate.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents candidates participating in a debate.
+    label: DebateParticipant
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    - direction: toone
+      fks:
+      - debate_id
+      name: debate
+      resource: Debate
+    type: DebateParticipant
+  District:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: region
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents electoral districts.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents electoral districts.
+    label: District
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - district_id
+      name: VoterList
+      resource: Voter
+    type: District
+  Election:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: location
+      required: true
+      template: text
+      type: VARCHAR
+    - name: date_held
+      required: true
+      type: DATETIME
+    description: Represents elections held at specific times.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents elections held at specific times.
+    label: Election
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - election_id
+      name: ElectionResultList
+      resource: ElectionResult
+    - direction: tomany
+      fks:
+      - election_id
+      name: VoteList
+      resource: Vote
+    type: Election
+  ElectionResult:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: candidate_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: election_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: votes_received
+      required: true
+      template: integer
+      type: INTEGER
+    description: Represents the result of an election for a candidate.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents the result of an election for a candidate.
+    label: ElectionResult
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    - direction: toone
+      fks:
+      - election_id
+      name: election
+      resource: Election
+    type: ElectionResult
+  MediaAppearance:
+    columns:
+    - label: ' media_name*'
+      name: media_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: candidate_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: appearance_date
+      required: true
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents media appearances made by candidates.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: media_name
+    home_template: home_template.html
+    info_list: Represents media appearances made by candidates.
+    label: MediaAppearance
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    type: MediaAppearance
+  Party:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: slogan
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents political parties in the election.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents political parties in the election.
+    label: Party
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - party_id
+      name: CandidateList
+      resource: Candidate
+    - direction: tomany
+      fks:
+      - party_id
+      name: SponsorshipList
+      resource: Sponsorship
+    type: Party
+  Sponsorship:
+    columns:
+    - label: ' sponsor_name*'
+      name: sponsor_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: candidate_id
+      template: integer
+      type: INTEGER
+    - name: party_id
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents sponsorship offers to candidates or parties.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: sponsor_name
+    home_template: home_template.html
+    info_list: Represents sponsorship offers to candidates or parties.
+    label: Sponsorship
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    - direction: toone
+      fks:
+      - party_id
+      name: party
+      resource: Party
+    type: Sponsorship
+  Vote:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: candidate_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: election_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: voter_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Represents individual votes cast in an election.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents individual votes cast in an election.
+    label: Vote
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - candidate_id
+      name: candidate
+      resource: Candidate
+    - direction: toone
+      fks:
+      - election_id
+      name: election
+      resource: Election
+    - direction: toone
+      fks:
+      - voter_id
+      name: voter
+      resource: Voter
+    type: Vote
+  Voter:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: district_id
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents registered voters.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents registered voters.
+    label: Voter
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - voter_id
+      name: VoteList
+      resource: Vote
+    - direction: toone
+      fks:
+      - district_id
+      name: district
+      resource: District
+    type: Voter
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

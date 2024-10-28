@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="Sponsorship" mode="tab" title="SPONSORSHIP">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="SponsorshipTable" 
+            service="Sponsorship" 
+            entity="Sponsorship" 
+            title="SPONSORSHIP"
+            keys="id"
+            columns="sponsor_name;candidate_id;party_id;id" 
+            header-actions="R;D"
+            visible-columns="sponsor_name;candidate_id;party_id;id"  
+            sort-columns="sponsor_name" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #sponsor_name attr="sponsor_name" title=" sponsor_name*" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column attr="candidate_id" title="candidate_id">
+    <o-table-cell-renderer-service attr="candidate_id" 
+        service="Candidate" entity="CandidateType" columns="id;name"
+        parent-keys="id:candidate_id"
+        value-column="name" keys="candidate_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="party_id" title="party_id">
+    <o-table-cell-renderer-service attr="party_id" 
+        service="Party" entity="PartyType" columns="id;name"
+        parent-keys="id:party_id"
+        value-column="name" keys="party_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>
